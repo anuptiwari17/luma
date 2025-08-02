@@ -1,26 +1,364 @@
-@import "tailwindcss";
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Custom properties for smooth transitions and animations */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+  --shadow-elegant: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 30px -4px rgba(0, 0, 0, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Base styles */
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Background grid pattern for hero sections */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Enhanced scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-base-200;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-base-content/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/30;
+}
+
+/* Text truncation utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced button styles */
+.btn {
+  @apply transition-all duration-200 ease-in-out;
+  @apply border-0 shadow-md;
+  letter-spacing: 0.025em;
+}
+
+.btn:hover {
+  @apply -translate-y-0.5 shadow-lg;
+}
+
+.btn:active {
+  @apply translate-y-0 shadow-md;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-primary to-primary/90;
+  @apply hover:from-primary/90 hover:to-primary/80;
+}
+
+.btn-secondary {
+  @apply bg-gradient-to-r from-secondary to-secondary/90;
+  @apply hover:from-secondary/90 hover:to-secondary/80;
+}
+
+/* Enhanced card styles */
+.card {
+  @apply transition-all duration-300 ease-in-out;
+  @apply shadow-lg border border-base-300/50;
+}
+
+.card:hover {
+  @apply shadow-xl -translate-y-1;
+  box-shadow: var(--shadow-hover);
+}
+
+/* Enhanced input styles */
+.input:focus,
+.textarea:focus,
+.select:focus {
+  @apply ring-2 ring-primary/20 border-primary;
+  @apply outline-none;
+}
+
+/* Enhanced navbar styles */
+.navbar {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Toast/Alert enhancements */
+.alert {
+  @apply shadow-lg border;
+  @apply animate-in slide-in-from-right duration-300;
+}
+
+.alert-success {
+  @apply border-success/20 bg-success/10 text-success;
+}
+
+.alert-error {
+  @apply border-error/20 bg-error/10 text-error;
+}
+
+.alert-warning {
+  @apply border-warning/20 bg-warning/10 text-warning;
+}
+
+.alert-info {
+  @apply border-info/20 bg-info/10 text-info;
+}
+
+/* Enhanced dropdown styles */
+.dropdown-content {
+  @apply animate-in fade-in-0 zoom-in-95 duration-200;
+  @apply border border-base-300 shadow-xl;
+}
+
+/* Progress bar enhancements */
+.progress {
+  @apply h-2 rounded-full overflow-hidden;
+}
+
+.progress::-webkit-progress-bar {
+  @apply bg-base-300 rounded-full;
+}
+
+.progress::-webkit-progress-value {
+  @apply bg-gradient-to-r from-primary to-secondary rounded-full;
+  @apply transition-all duration-300 ease-out;
+}
+
+.progress::-moz-progress-bar {
+  @apply bg-gradient-to-r from-primary to-secondary rounded-full;
+}
+
+/* Badge enhancements */
+.badge {
+  @apply transition-all duration-200 ease-in-out;
+  @apply shadow-sm;
+}
+
+.badge:hover {
+  @apply shadow-md;
+}
+
+/* Video component specific styles */
+.video-thumbnail {
+  @apply relative overflow-hidden rounded-xl;
+  aspect-ratio: 9/16;
+}
+
+.video-thumbnail img,
+.video-thumbnail video {
+  @apply w-full h-full object-cover;
+  @apply transition-transform duration-300 ease-out;
+}
+
+.video-thumbnail:hover img,
+.video-thumbnail:hover video {
+  @apply scale-105;
+}
+
+/* File upload drag and drop styles */
+.file-upload-zone {
+  @apply transition-all duration-200 ease-in-out;
+  @apply border-2 border-dashed border-base-300;
+  @apply hover:border-primary hover:bg-primary/5;
+}
+
+.file-upload-zone.drag-active {
+  @apply border-primary bg-primary/10;
+  @apply scale-[0.98];
+}
+
+/* Enhanced form styles */
+.form-control {
+  @apply space-y-1;
+}
+
+.label-text {
+  @apply font-medium text-base-content/80;
+}
+
+.label-text-alt {
+  @apply text-xs text-base-content/60;
+}
+
+/* Responsive text utilities */
+@layer utilities {
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+  
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+  
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+  
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-in {
+    animation-fill-mode: both;
+  }
+
+  .fade-in-0 {
+    animation-name: fadeIn;
+  }
+
+  .slide-in-from-right {
+    animation-name: slideInFromRight;
+  }
+
+  .zoom-in-95 {
+    animation-name: zoomIn;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --shadow-elegant: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .card {
+    @apply shadow-none border border-gray-300;
+  }
+  
+  .btn {
+    @apply shadow-none;
+  }
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  @apply ring-2 ring-primary ring-offset-2 ring-offset-base-100;
+  @apply outline-none;
+}
+
+/* Enhanced gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary via-secondary to-accent;
+  @apply bg-clip-text text-transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }

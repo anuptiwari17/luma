@@ -5,7 +5,10 @@ import { connectToDatabase } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const rawBody = await request.json();
+    const email = rawBody.email.toLowerCase();
+    const password = rawBody.password;
+
 
     if (!email || !password) {
       return NextResponse.json(
